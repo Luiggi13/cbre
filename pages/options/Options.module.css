@@ -1,8 +1,10 @@
+
 .container {
   padding: 0 2rem;
 }
 
 .main {
+  background: white;
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
@@ -10,9 +12,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url(../public/assets/bg-home.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .footer {
