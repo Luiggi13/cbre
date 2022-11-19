@@ -84,15 +84,15 @@ export default function Options() {
       <div className="flex flex-col max-h-full w-full justify-center items-center">
         <h2 className="text-2xl uppercase">Restaurantes a escoger</h2>
       </div>
-      <div className="flex max-h-full w-full">
+      {/* <div className="flex max-h-full w-full">
         <div className="flex w-full text-black mt-4 mx-20 py-10 bg-white rounded-lg relative mb-10 px-5">
-          {restaurantes.map((item,index) => {
+          {restaurantes.map((item, index) => {
             return <div key={index} className=" w-1/4 justify-center drop-shadow-md hover:drop-shadow-xl h-40 bg-white rounded-lg mx-5">
               <p className='bg-green-800'> {item.name} </p>
             </div>
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
