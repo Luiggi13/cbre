@@ -14,6 +14,28 @@
   background-color: rgb(22 101 52);
   background-image: url(../../public/assets/luces.png);
   background-repeat: repeat-x;
+  background-color: white;
+  /* background-position: -10px -25px; */
+
+}
+.bgxmaswhite {
+  min-height: 100vh;
+
+  position: relative;
+  background-color: white;
+}
+.bgxmaswhite:before {
+  background-color: white;
+  background-image: url(../../public/assets/white-christmas-bg.jpg);
+  background-repeat: repeat-y;
+  background-size: cover;
+  content: "";
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.2;
   /* background-position: -10px -25px; */
 
 }
