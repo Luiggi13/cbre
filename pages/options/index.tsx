@@ -75,7 +75,7 @@ export default function Options() {
   return (
     <div className={styles.main}>
       <Head>
-        <title>CBRE Night Dinner</title>
+        <title>CBRE Night Dinner 🎄</title>
         <meta name="description" content="CBRE Night Dinner AP" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
