@@ -79,7 +79,7 @@ export default function Options() {
             <Image
               alt=""
               src={logoCbre}
-              className="mx-auto w-48 rounded-full"
+              className={"mx-auto w-48 rounded-full" && styles.avatar}
             />
           </div>
           <p className="text-xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, en esta página podrás ver los menús de Navidad y votar los que más te gusten 🎄</p>
