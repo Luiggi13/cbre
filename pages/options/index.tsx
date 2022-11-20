@@ -94,8 +94,10 @@ export default function Options() {
 
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {restaurantes.map((item, index) => {
-              return <div key={index} className="group relative">
-                <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 shadow-red-200 shadow-md relative">
+              return <div key={index} className="group relative mb-5 mt-5">
+                <div className="h-full">
+                  
+                <div className="h-full aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none shadow-red-200 shadow-md relative">
                   <Image
                     src={item.img ? item.img : defaultImage}
                     priority={true}
@@ -104,14 +106,14 @@ export default function Options() {
                     className={"h-full w-full object-cover object-center lg:h-full lg:w-full"}
                   />
                   <div className='absolute bottom-0 left-0 w-full'>
-                      <div className="w-full flex justify-between ">
-                        <button className="flex bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded items-center text-sm">
-                          <span>👍 Me gusta</span>
-                        </button>
+                    <div className="w-full flex justify-between ">
                       <button className="flex bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded items-center text-sm">
-                          <span>👎 No me gusta</span>
-                        </button>
-                      </div>
+                        <span>👍 Me gusta</span>
+                      </button>
+                      <button className="flex bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded items-center text-sm">
+                        <span>👎 No me gusta</span>
+                      </button>
+                    </div>
                     {/* <div className="flex flex-row justify-between">
                       <button className="flex bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded items-center ">
                         <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
@@ -124,32 +126,24 @@ export default function Options() {
                     </div> */}
                   </div>
                 </div>
-                <div className="mt-4 flex justify-between">
-                  {item.menu ? <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={item.menu}
-                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mr-1"
-                  >
-                    Ver menú
-                  </a> : null}
-                  {item.carta ? <a
-                    href={item.carta}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ml-1"
-                  >
-                    Ver carta
-                  </a> : null}
-                  {/* <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      {item.name}
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">Black</p>
-                </div> */}
+                  <div className="mt-4 flex justify-between">
+                    {item.menu ? <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={item.menu}
+                      className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mr-1"
+                    >
+                      Ver menú
+                    </a> : null}
+                    {item.carta ? <a
+                      href={item.carta}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ml-1"
+                    >
+                      Ver carta
+                    </a> : null}
+                  </div>
                 </div>
               </div>
             })}
