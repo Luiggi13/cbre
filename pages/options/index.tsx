@@ -9,8 +9,9 @@ import logoCbre from 'public/assets/cbre-logo.png'
 import santaclaraImg from 'public/assets/santa-clara.png'
 import laselvaImg from 'public/assets/la-selva.webp'
 import casapetraImg from 'public/assets/casa-petra.jpeg'
-import fuocoImg from 'public/assets/fuoco.jpeg'
+import fuocoImg from 'public/assets/fuocco-2.png'
 import locavoreImg from 'public/assets/locavore.png'
+import steakImg from 'public/assets/steak.jpeg'
 import defaultImage from 'public/assets/default.png'
 interface Restaurante {
   name: string;
@@ -49,6 +50,12 @@ export default function Options() {
       "carta": "https://www.thefork.es/restaurante/locavore-r706353/menu",
       "menu": "",
       "img": locavoreImg
+    },
+    {
+      "name": "Carnal Steak House",
+      "carta": "https://carnalsteakhouse.com/#menu",
+      "menu": "",
+      "img": steakImg
     },
   ]
   const router = useRouter()
