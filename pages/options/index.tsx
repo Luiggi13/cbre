@@ -11,6 +11,9 @@ import fuocoImg from 'public/assets/fuocco-2.png'
 import locavoreImg from 'public/assets/locavore.png'
 import steakImg from 'public/assets/steak.png'
 import defaultImage from 'public/assets/default.png'
+import { ToastContainer, toast } from 'react-toast'
+import { isRestParameter } from 'typescript';
+
 
 interface Usuarios {
   id: number;
@@ -74,19 +77,26 @@ export default function Options() {
       "img": steakImg
     },
   ]
+  const wave = () => toast.error('No puedes volver a votar al mismo restaurante 2 veces')
+
   const [actualVotos, setActualVotos] = useState<Votos[]>([])
   const router = useRouter()
   const [user, setUser] = useState('');
   const [actualUser, setActualUser] = useState<Usuarios>();
   const up = async (idRestaurant: number, name: string) => {
+    let isupdate = false;
     let preVote = actualUser!;
     preVote!.data.forEach((item: Votos) => {
       if (item.idDb === idRestaurant) {
-        item.votes++
-        item.voted = true
-        return item;
+        if(item.voted===true) wave()
+        else {
+          item.votes++
+          item.voted = true
+          return item;
+        }
       }
     })
+    if(isupdate) return
     await fetch('/api/vote/update', {
       method: 'POST',
       body: JSON.stringify(preVote.data),
@@ -100,15 +110,19 @@ export default function Options() {
     checkUser(name, data)
   }
   const down = async (idRestaurant: number, name: string) => {
-
+    let isupdate = false;
     let preVote = actualUser!;
     preVote!.data.forEach((item: Votos) => {
       if (item.idDb === idRestaurant) {
-        item.votes--
-        item.voted = true
-        return item;
+        if(item.voted===true) wave()
+        else {
+          item.votes--
+          item.voted = true
+          return item;
+        }
       }
     })
+    if(isupdate) return
     await fetch('/api/vote/update', {
       method: 'POST',
       body: JSON.stringify(preVote.data),
@@ -117,10 +131,9 @@ export default function Options() {
         'user': name
       }
     })
-
     const res = await fetch(`/api/vote`)
-      const data = await res.json()
-      checkUser(name, data)
+    const data = await res.json()
+    checkUser(name, data)
 
   }
 
@@ -175,7 +188,7 @@ export default function Options() {
             {restaurantes.map((item, index) => {
               return <div key={index} className="group relative mb-5 mt-5">
                 <div className="h-full">
-
+                  <ToastContainer position='top-center' delay={3000} />
                   <div className="h-full aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none shadow-red-200 shadow-md relative">
                     <Image
                       src={item.img ? item.img : defaultImage}
@@ -232,6 +245,10 @@ export default function Options() {
 
           </div>
         </div>
+          <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
+          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            s
+          </div>
       </div>
       {/* <div className="flex flex-row max-h-full w-full">
         <div className="flex w-full text-black mt-40 mx-20 py-5 bg-white rounded-lg relative mb-10">
