@@ -12,9 +12,35 @@ export default function Home() {
 
   const submitContact = async (event: any) => {
     event.preventDefault();
-    setIsValid(true);
-    localStorage.setItem('userCbre', JSON.stringify(event.target.name.value))
-    router.push('/options')
+    const res = await fetch(`/api/users`)
+    const data:any [] = await res.json()
+    data.forEach((item:string)=> {
+      if(item.toLocaleLowerCase() === (event.target.name.value).toLocaleLowerCase()) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify(event.target.name.value))
+        router.push('/options')
+      }else if(String(event.target.name.value).toLocaleLowerCase().includes('AR'.toLocaleLowerCase()) && String(event.target.name.value).toLocaleLowerCase().includes('Raquel'.toLocaleLowerCase())) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify('Raquel AR'))
+        router.push('/options')
+      }
+      else if(String(event.target.name.value).toLocaleLowerCase().includes('María'.toLocaleLowerCase()) || String(event.target.name.value).toLocaleLowerCase().includes('Maria'.toLocaleLowerCase())) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify('Maria'))
+        router.push('/options')
+      }
+      else if(String(event.target.name.value).toLocaleLowerCase().includes('Jessica'.toLocaleLowerCase()) || String(event.target.name.value).toLocaleLowerCase().includes('Jéssica'.toLocaleLowerCase())) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify('Jessica'))
+        router.push('/options')
+      }
+      else if(String(event.target.name.value).toLocaleLowerCase().includes('Miriam'.toLocaleLowerCase()) || String(event.target.name.value).toLocaleLowerCase().includes('Míriam'.toLocaleLowerCase())) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify('Miriam'))
+        router.push('/options')
+      }
+    })
+
   };
   return (
     <div className={styles.main}>
