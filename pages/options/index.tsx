@@ -3,15 +3,13 @@ import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from './Options.module.css'
-import plato from 'public/assets/plato.png'
-import camiseta from 'public/assets/camiseta.jpeg'
 import logoCbre from 'public/assets/cbre-logo.png'
 import santaclaraImg from 'public/assets/santa-clara.png'
-import laselvaImg from 'public/assets/la-selva.webp'
-import casapetraImg from 'public/assets/casa-petra.jpeg'
+import laselvaImg from 'public/assets/la-selva.png'
+import casapetraImg from 'public/assets/casa-petra.png'
 import fuocoImg from 'public/assets/fuocco-2.png'
 import locavoreImg from 'public/assets/locavore.png'
-import steakImg from 'public/assets/steak.jpeg'
+import steakImg from 'public/assets/steak.png'
 import defaultImage from 'public/assets/default.png'
 interface Restaurante {
   name: string;
