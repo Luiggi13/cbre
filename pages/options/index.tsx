@@ -82,7 +82,8 @@ export default function Options() {
               className="mx-auto w-48 rounded-full"
             />
           </div>
-          <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes {user}</h2>
+          <p className="text-xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, en esta página podrás ver los menús de Navidad y votar los que más te gusten 🎄</p>
+          <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {restaurantes.map((item, index) => {

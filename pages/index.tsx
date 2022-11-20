@@ -24,7 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex max-h-full w-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex max-h-full w-full items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="relative w-48 mx-auto">
 
