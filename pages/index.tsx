@@ -12,9 +12,18 @@ export default function Home() {
 
   const submitContact = async (event: any) => {
     event.preventDefault();
-    setIsValid(true);
-    localStorage.setItem('userCbre', JSON.stringify(event.target.name.value))
-    router.push('/options')
+    const res = await fetch(`/api/users`)
+    const data:any [] = await res.json()
+    data.forEach((item:string)=> {
+      if(item.toLocaleLowerCase() === (event.target.name.value).toLocaleLowerCase()) {
+        setIsValid(true);
+        console.log(item.toLocaleLowerCase())
+        console.log((event.target.name.value).toLocaleLowerCase())
+        localStorage.setItem('userCbre', JSON.stringify(event.target.name.value))
+        router.push('/options')
+      }
+    })
+
   };
   return (
     <div className={styles.main}>
