@@ -277,10 +277,10 @@ export default function Options() {
           <div className="flex flex-col">
             <div className="overflow-x sm:-mx-6 lg:-mx-8 w-full">
               <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="overflow-hidden">
-                  <table className="w-full">
-                    <thead className="bg-white border-b">
-                      <tr>
+                <div className="overflow-x">
+                  <table className="w-full table-fixed">
+                    <tbody>
+                    <tr>
                         <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                           Nombre
                         </th>
@@ -303,8 +303,6 @@ export default function Options() {
                           Carnal
                         </th>
                       </tr>
-                    </thead>
-                    <tbody>
                         { tableData?.map((user,index)=> {
                           return (<tr key={index} className="bg-gray-100 border-b">
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
