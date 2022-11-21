@@ -124,6 +124,7 @@ export default function Options() {
       const data = await res.json()
       setTableData(data)
       checkUser(name, data)
+      contar()
     })
     // if (needReload === true) router.reload()
 
@@ -150,6 +151,7 @@ export default function Options() {
       const data = await res.json()
       setTableData(data)
       checkUser(name, data)
+      contar()
     })
     // if (needReload === true) router.reload()
 
