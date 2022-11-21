@@ -39,6 +39,11 @@ export default function Home() {
         localStorage.setItem('userCbre', JSON.stringify('Miriam'))
         router.push('/options')
       }
+      else if(String(event.target.name.value).toLocaleLowerCase().includes('Mariana'.toLocaleLowerCase())) {
+        setIsValid(true);
+        localStorage.setItem('userCbre', JSON.stringify('Mariana'))
+        router.push('/options')
+      }
     })
 
   };
