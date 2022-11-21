@@ -24,7 +24,7 @@ export default function Home() {
         localStorage.setItem('userCbre', JSON.stringify('Raquel AR'))
         router.push('/options')
       }
-      else if(String(event.target.name.value).toLocaleLowerCase().includes('María'.toLocaleLowerCase()) || String(event.target.name.value).toLocaleLowerCase().includes('Maria'.toLocaleLowerCase())) {
+      else if(String(event.target.name.value).toLocaleLowerCase() === 'María'.toLocaleLowerCase() || String(event.target.name.value).toLocaleLowerCase() === 'Maria'.toLocaleLowerCase()) {
         setIsValid(true);
         localStorage.setItem('userCbre', JSON.stringify('Maria'))
         router.push('/options')
@@ -39,9 +39,9 @@ export default function Home() {
         localStorage.setItem('userCbre', JSON.stringify('Miriam'))
         router.push('/options')
       }
-      else if(String(event.target.name.value).toLocaleLowerCase().includes('Mariana'.toLocaleLowerCase())) {
+      else if(String(event.target.name.value).toLocaleLowerCase().includes('Mariana AP'.toLocaleLowerCase())) {
         setIsValid(true);
-        localStorage.setItem('userCbre', JSON.stringify('Mariana'))
+        localStorage.setItem('userCbre', JSON.stringify('Mariana AP'))
         router.push('/options')
       }
     })
