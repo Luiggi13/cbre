@@ -38,6 +38,10 @@ interface Restaurante {
   carta: string;
   img?: StaticImageData;
 }
+interface Total {
+  idDb: number;
+  votes: number;
+}
 export default function Options() {
   const restaurantes: Restaurante[] = [
     {
@@ -83,8 +87,8 @@ export default function Options() {
       "img": steakImg
     },
   ]
-  const noVote = (message:string) => toast.error(message)
-  const voted = (message:string) => toast.success(message)
+  const noVote = (message: string) => toast.error(message)
+  const voted = (message: string) => toast.success(message)
 
   const [actualVotos, setActualVotos] = useState<Votos[]>([])
   const router = useRouter()
@@ -93,29 +97,35 @@ export default function Options() {
   const [actualUser, setActualUser] = useState<Usuarios>();
   const [isPermited, setIsPermited] = useState(false);
   const [needReload, setNeedReload] = useState(false);
+  const [totalClara, setTotalClara] = useState(0);
+  const [totalSelva, setTotalSelva] = useState(0);
+  const [totalCasaPetra, setTotalCasaPetra] = useState(0);
+  const [totalFuoco, setTotalFuoco] = useState(0);
+  const [totalLocavore, setTotalLocavore] = useState(0);
+  const [totalCarnal, setTotalCarnal] = useState(0);
   const up = async (idRestaurant: number, name: string) => {
     let preVote = actualUser!;
-      const respuesta = await fetch('/api/vote/update', {
-        method: 'POST',
-        body: JSON.stringify(preVote.data),
-        headers: {
-          'Content-Type': 'application/json',
-          'user': name,
-          'restaurante': String(idRestaurant),
-          'fn': 'up',
-        }
-      });
-      const tt = respuesta.json()
-      tt.then((res:ApiResponse)=> {
-        if(!res.success) {noVote(res.message); setNeedReload(true)}
-        if(res.success) {voted(res.message);setNeedReload(false)}
-      }).finally(async()=> {
-        const res = await fetch(`/api/vote`)
-        const data = await res.json()
-        setTableData(data)
-        checkUser(name, data)
-      })
-      // if (needReload === true) router.reload()
+    const respuesta = await fetch('/api/vote/update', {
+      method: 'POST',
+      body: JSON.stringify(preVote.data),
+      headers: {
+        'Content-Type': 'application/json',
+        'user': name,
+        'restaurante': String(idRestaurant),
+        'fn': 'up',
+      }
+    });
+    const tt = respuesta.json()
+    tt.then((res: ApiResponse) => {
+      if (!res.success) { noVote(res.message); setNeedReload(true) }
+      if (res.success) { voted(res.message); setNeedReload(false) }
+    }).finally(async () => {
+      const res = await fetch(`/api/vote`)
+      const data = await res.json()
+      setTableData(data)
+      checkUser(name, data)
+    })
+    // if (needReload === true) router.reload()
 
 
   }
@@ -132,10 +142,10 @@ export default function Options() {
       }
     });
     const tt = respuesta.json()
-    tt.then((res:ApiResponse)=> {
-      if(!res.success) {noVote(res.message); setNeedReload(true)}
-      if(res.success) {voted(res.message);setNeedReload(false)}
-    }).finally(async()=> {
+    tt.then((res: ApiResponse) => {
+      if (!res.success) { noVote(res.message); setNeedReload(true) }
+      if (res.success) { voted(res.message); setNeedReload(false) }
+    }).finally(async () => {
       const res = await fetch(`/api/vote`)
       const data = await res.json()
       setTableData(data)
@@ -149,6 +159,62 @@ export default function Options() {
 
   }
 
+  const contar = async () => {
+    const res = await fetch(`/api/vote/count`)
+    const data = await res.json()
+    let votos: Total[] = [
+      {
+        idDb: 1, votes: 0,
+      },
+      {
+        idDb: 2, votes: 0,
+      },
+      {
+        idDb: 3, votes: 0,
+      },
+      {
+        idDb: 4, votes: 0,
+      },
+      {
+        idDb: 5, votes: 0,
+      },
+      {
+        idDb: 6, votes: 0,
+      },
+    ]
+    let total: Total[] = [{
+      idDb: 1, votes: 0,
+    },
+    {
+      idDb: 2, votes: 0,
+    },
+    {
+      idDb: 3, votes: 0,
+    },
+    {
+      idDb: 4, votes: 0,
+    },
+    {
+      idDb: 5, votes: 0,
+    },
+    {
+      idDb: 6, votes: 0,
+    }];
+    data.forEach((item: any) => {
+      item.data.forEach((datas: Votos) => {
+        votos[datas.idDb - 1].votes = votos[datas.idDb - 1].votes + datas.votes
+      })
+    })
+    total = votos
+    total.forEach((item) => {
+      if (item.idDb === 1) setTotalClara(item.votes)
+      if (item.idDb === 2) setTotalSelva(item.votes)
+      if (item.idDb === 3) setTotalCasaPetra(item.votes)
+      if (item.idDb === 4) setTotalFuoco(item.votes)
+      if (item.idDb === 5) setTotalLocavore(item.votes)
+      if (item.idDb === 6) setTotalCarnal(item.votes)
+    })
+  }
   const checkUser = (name: string, data: Usuarios[]) => {
     data.forEach((usuario) => {
       if (usuario.username.toLocaleLowerCase() === name.toLocaleLowerCase()) {
@@ -160,7 +226,7 @@ export default function Options() {
 
   const tableDataFetch = () => {
     tableData!.forEach(element => {
-      
+
     });
   }
   useEffect(() => {
@@ -173,6 +239,7 @@ export default function Options() {
       const data = await res.json()
       setTableData(data)
       checkUser(name, data)
+      contar()
 
     }
     if (localStorage.getItem('userCbre')) {
@@ -265,189 +332,251 @@ export default function Options() {
           </div>
         </div>
         <h2 className="relative text-2xl text-center font-bold tracking-tight text-gray-900 uppercase mt-6">Listado de votaciones</h2>
+
         <div className="relative mx-auto max-w-2xl px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
-          <div className="flex flex-col">
-            <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
-              <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="overflow-x">
-                  <table className="w-full">
-                    <tbody>
-                    <tr>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Nombre
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Santa Clara
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          La Selva
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Casa Petra
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Bendito Fuoco
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Locavore
-                        </th>
-                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                          Carnal
-                        </th>
-                      </tr>
-                        { tableData?.map((user,index)=> {
+          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
+            <div className="flex flex-col">
+              <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="overflow-x">
+                    <table className="w-full">
+                      <tbody>
+                        <tr>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Nombre
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Santa Clara
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            La Selva
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Casa Petra
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Bendito Fuoco
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Locavore
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Carnal
+                          </th>
+                        </tr>
+                        {tableData?.map((user, index) => {
                           return (<tr key={index} className="bg-gray-100 border-b">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {user.data[0].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[0].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {user.data[1].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[1].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {user.data[2].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[2].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {user.data[3].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[3].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {user.data[4].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[4].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {user.data[5].votes === 1 ?
-                            <Image
-                            alt=""
-                            src={check}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          /> : user.data[5].votes === -1 ?
-                          <Image
-                            alt=""
-                            src={uncheck}
-                            width="100"
-                            height="100"
-                            className={"mx-auto w-10 rounded-full"}
-                          />:<Image
-                          alt=""
-                          src={question}
-                          width="100"
-                          height="100"
-                          className={"mx-auto w-10 rounded-full"}
-                        />} 
-                          </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[0].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[0].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[1].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[1].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[2].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[2].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[3].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[3].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[4].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[4].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {user.data[5].votes === 1 ?
+                                <Image
+                                  alt=""
+                                  src={check}
+                                  width="100"
+                                  height="100"
+                                  className={"mx-auto w-10 rounded-full"}
+                                /> : user.data[5].votes === -1 ?
+                                  <Image
+                                    alt=""
+                                    src={uncheck}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  /> : <Image
+                                    alt=""
+                                    src={question}
+                                    width="100"
+                                    height="100"
+                                    className={"mx-auto w-10 rounded-full"}
+                                  />}
+                            </td>
                           </tr>)
                         })}
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 mb-36">
+
+          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
+            <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Votos totales</h2>
+            <div className="flex flex-col">
+              <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="overflow-x">
+                    <table className="w-full">
+                      <tbody>
+                        <tr className="bg-gray-100 border-b">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Santa Clara
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            La Selva
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Casa Petra
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Bendito Fuoco
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Locavore
+                          </th>
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Carnal
+                          </th>
+                        </tr>
+                        <tr className="bg-gray-100 border-b">
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalClara} Votos
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalSelva} Votos
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalCasaPetra} Votos
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalFuoco} Votos
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalLocavore} Votos
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {totalCarnal} Votos
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   )
