@@ -264,7 +264,7 @@ export default function Options() {
 
           </div>
         </div>
-        <h2 className="relative text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
+        <h2 className="relative text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Listado de votaciones</h2>
         <div className="relative mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
