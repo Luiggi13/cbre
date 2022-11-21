@@ -198,7 +198,7 @@ export default function Options() {
       </Head>
 
       <div className={styles.bgxmaswhite}>
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 relative">
           <div className="relative w-48 mx-auto mb-10">
             <Image
               alt=""
@@ -270,15 +270,15 @@ export default function Options() {
 
           </div>
         </div>
-        <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="relative text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
+        <div className="relative mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
           <div className="flex flex-col">
-            <div className="overflow-x sm:-mx-6 lg:-mx-8 w-full">
+            <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
               <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-x">
-                  <table className="w-full table-fixed">
+                  <table className="w-full">
                     <tbody>
                     <tr>
                         <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
