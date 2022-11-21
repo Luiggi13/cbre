@@ -345,25 +345,25 @@ export default function Options() {
                     <table className="w-full">
                       <tbody>
                         <tr>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left w-4">
                             Nombre
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             Santa Clara
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             La Selva
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             Casa Petra
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             Bendito Fuoco
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             Locavore
                           </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
                             Carnal
                           </th>
                         </tr>
