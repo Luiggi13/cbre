@@ -13,13 +13,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if(req.method === 'POST') {
-    console.log(req.body)
-  await supabase
-  .from('usuarioscbre')
-  .update({data:req.body})
-  .eq('username', req.headers['user'])
-  .select()
-  res.status(200).json(true)
+    const rest:number = +req.headers['restaurante']!
+    if(req.body[rest-1].voted === true) res.status(200).json({message: 'No puedes volver a votar al mismo restaurante 2 veces', success: false})
+    else {
+      const objToSend = req.body;
+      if(req.headers['fn'] === 'up') {
+        objToSend[rest-1].voted = true;
+        objToSend[rest-1].votes++;
+      }
+      if(req.headers['fn'] === 'down') {
+        objToSend[rest-1].voted = true;
+        objToSend[rest-1].votes--;
+      }
+      await supabase
+      .from('usuarioscbre')
+      .update({data:objToSend})
+      .eq('username', req.headers['user'])
+      .select()
+      res.status(200).json({message: 'Votado', success: true})
+    }
 } else {
     res.status(403).json({message: "Method not Allowed"})
   }

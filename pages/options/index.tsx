@@ -17,7 +17,10 @@ import question from 'public/assets/question.png'
 import { ToastContainer, toast } from 'react-toast'
 import { isRestParameter } from 'typescript';
 
-
+interface ApiResponse {
+  message: string;
+  success: boolean;
+}
 interface Usuarios {
   id: number;
   username: string;
@@ -80,7 +83,8 @@ export default function Options() {
       "img": steakImg
     },
   ]
-  const wave = () => toast.error('No puedes volver a votar al mismo restaurante 2 veces')
+  const noVote = (message:string) => toast.error(message)
+  const voted = (message:string) => toast.success(message)
 
   const [actualVotos, setActualVotos] = useState<Votos[]>([])
   const router = useRouter()
@@ -88,70 +92,60 @@ export default function Options() {
   const [tableData, setTableData] = useState<Usuarios[]>();
   const [actualUser, setActualUser] = useState<Usuarios>();
   const [isPermited, setIsPermited] = useState(false);
+  const [needReload, setNeedReload] = useState(false);
   const up = async (idRestaurant: number, name: string) => {
     let preVote = actualUser!;
-    preVote!.data.forEach((item: Votos) => {
-      if (item.idDb === idRestaurant) {
-        if (item.voted === true) setIsPermited(false);
-        else {
-          setIsPermited(true)
-          item.votes++
-          item.voted = true
-          return item;
-        }
-      }
-    })
-    if (isPermited) {
-      await fetch('/api/vote/update', {
+      const respuesta = await fetch('/api/vote/update', {
         method: 'POST',
         body: JSON.stringify(preVote.data),
         headers: {
           'Content-Type': 'application/json',
-          'user': name
+          'user': name,
+          'restaurante': String(idRestaurant),
+          'fn': 'up',
         }
+      });
+      const tt = respuesta.json()
+      tt.then((res:ApiResponse)=> {
+        if(!res.success) {noVote(res.message); setNeedReload(true)}
+        if(res.success) {voted(res.message);setNeedReload(false)}
+      }).finally(async()=> {
+        const res = await fetch(`/api/vote`)
+        const data = await res.json()
+        setTableData(data)
+        checkUser(name, data)
       })
-      setIsPermited(false);
-      router.reload()
-    } else if (!isPermited){
+      // if (needReload === true) router.reload()
 
-      const res = await fetch(`/api/vote`)
-      const data = await res.json()
-      checkUser(name, data)
-      wave()
-    }
 
   }
   const down = async (idRestaurant: number, name: string) => {
     let preVote = actualUser!;
-    preVote!.data.forEach((item: Votos) => {
-      if (item.idDb === idRestaurant) {
-        if (item.voted === true) setIsPermited(false);
-        else {
-          setIsPermited(true)
-          item.votes--
-          item.voted = true
-          return item;
-        }
+    const respuesta = await fetch('/api/vote/update', {
+      method: 'POST',
+      body: JSON.stringify(preVote.data),
+      headers: {
+        'Content-Type': 'application/json',
+        'user': name,
+        'restaurante': String(idRestaurant),
+        'fn': 'down',
       }
-    })
-    if (isPermited) {
-      await fetch('/api/vote/update', {
-        method: 'POST',
-        body: JSON.stringify(preVote.data),
-        headers: {
-          'Content-Type': 'application/json',
-          'user': name
-        }
-      })
-      setIsPermited(false);
-      router.reload()
-    } else if (!isPermited){
-
+    });
+    const tt = respuesta.json()
+    tt.then((res:ApiResponse)=> {
+      if(!res.success) {noVote(res.message); setNeedReload(true)}
+      if(res.success) {voted(res.message);setNeedReload(false)}
+    }).finally(async()=> {
       const res = await fetch(`/api/vote`)
       const data = await res.json()
+      setTableData(data)
       checkUser(name, data)
-      wave()
-    }
+    })
+    // if (needReload === true) router.reload()
+
+    // const res = await fetch(`/api/vote`)
+    // const data = await res.json()
+    // checkUser(name, data)
 
   }
 
