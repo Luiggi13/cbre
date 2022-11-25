@@ -269,316 +269,36 @@ export default function Options() {
               className={"mx-auto w-48 rounded-full" && styles.avatar}
             />
           </div>
-          <p className="text-xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, en esta página podrás ver los menús de Navidad y votar los que más te gusten 🎄</p>
-          <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Ver menús de los restaurantes</h2>
-
-          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {restaurantes.map((item, index) => {
-              return <div key={index} className="group relative mb-5 mt-5">
-                <div className="h-full">
-                  <ToastContainer delay={3000} />
-                  <div className="h-full aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none shadow-red-200 shadow-md relative">
-                    <Image
-                      src={item.img ? item.img : defaultImage}
-                      priority={true}
-                      key={index}
-                      alt="Front of menus Basic Tee in black."
-                      className={"h-full w-full object-cover object-center lg:h-full lg:w-full"}
-                    />
-                    <div className='absolute bottom-0 left-0 w-full'>
-                      <div className="w-full flex justify-between ">
-                        <button className="flex bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded items-center text-sm"
-                          onClick={() => up(item.idDb, user)}
-                        >
-                          <span>👍 Me gusta</span>
-                        </button>
-                        <button className="flex bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded items-center text-sm" onClick={() => down(item.idDb, user)}>
-                          <span>👎 No me gusta</span>
-                        </button>
-                      </div>
-                      {/* <div className="flex flex-row justify-between">
-                      <button className="flex bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded items-center ">
-                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-                        <span>Me gusta</span>
-                      </button>
-                      <button className="flex bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded items-center">
-                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-                        <span>No me gusta</span>
-                      </button>
-                    </div> */}
-                    </div>
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    {item.menu ? <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={item.menu}
-                      className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mr-1"
-                    >
-                      Ver menú
-                    </a> : null}
-                    {item.carta ? <a
-                      href={item.carta}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ml-1"
-                    >
-                      Ver carta
-                    </a> : null}
-                  </div>
-                </div>
+          <p className="text-xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, por fin ya tenemos restaurante. 🎄</p>
+          <div className="flex justify-center">
+            <div className="rounded-lg shadow-lg bg-white w-full sm:w-2/3 lg:w-2/3 xl:w-1/2">
+                <Image
+                  src={steakImg}
+                  priority={true}
+                  key={String(steakImg)}
+                  alt="Steak restaurant"
+                  className="rounded-t-lg w-full"
+                />
+              <div className="p-6">
+                <h5 className="text-gray-900 text-xl font-medium mb-2 text-center uppercase">Restaurante Carnal</h5>
               </div>
-            })}
-
-
-          </div>
-        </div>
-        <h2 className="relative text-2xl text-center font-bold tracking-tight text-gray-900 uppercase mt-6">Listado de votaciones</h2>
-
-        <div className="relative mx-auto max-w-2xl px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-
-          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
-            <div className="flex flex-col">
-              <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
-                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-x">
-                    <table className="w-full">
-                      <tbody>
-                        <tr>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left w-4">
-                            Nombre
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            Santa Clara
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            La Selva
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            Casa Petra
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            Bendito Fuoco
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            Locavore
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-center">
-                            Carnal
-                          </th>
-                        </tr>
-                        {tableData?.map((user, index) => {
-                          return (<tr key={index} className="bg-gray-100 border-b">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[0].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[0].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[1].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[1].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[2].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[2].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[3].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[3].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[4].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[4].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              {user.data[5].votes === 1 ?
-                                <Image
-                                  alt=""
-                                  src={check}
-                                  width="100"
-                                  height="100"
-                                  className={"mx-auto w-10 rounded-full"}
-                                /> : user.data[5].votes === -1 ?
-                                  <Image
-                                    alt=""
-                                    src={uncheck}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  /> : <Image
-                                    alt=""
-                                    src={question}
-                                    width="100"
-                                    height="100"
-                                    className={"mx-auto w-10 rounded-full"}
-                                  />}
-                            </td>
-                          </tr>)
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+              <div className="py-3 px-6 border-t border-gray-300 text-gray-600">
+                <p className="mb-3"><span className="font-bold">Dirección:</span> Calle Enric Granados, 52 08008 – Barcelona</p>
+                <p className="mb-3"><span className="font-bold">Fecha de la reserva:</span> Viernes, 2 de Diciembre de 2022</p>
+                <p className="mb-3"><span className="font-bold">Hora de la reserva:</span> 20:00h</p>
+                <p className="mb-3"><span className="font-bold">Ver mapa:</span></p>
+                <a
+                rel="noreferrer"
+                href="https://goo.gl/maps/zWo2WrYuVUYPGoLt8"
+                target="_blank"
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mt-5"
+              >
+                Carnal en Google Maps
+              </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 mb-36">
-
-          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-1 lg:grid-cols-1 xl:gap-x-8">
-            <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 uppercase">Votos totales</h2>
-            <div className="flex flex-col">
-              <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8 w-full">
-                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-x">
-                    <table className="w-full">
-                      <tbody>
-                        <tr className="bg-gray-100 border-b">
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            Santa Clara
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            La Selva
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            Casa Petra
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            Bendito Fuoco
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            Locavore
-                          </th>
-                          <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                            Carnal
-                          </th>
-                        </tr>
-                        <tr className="bg-gray-100 border-b">
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalClara} Votos
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalSelva} Votos
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalCasaPetra} Votos
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalFuoco} Votos
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalLocavore} Votos
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {totalCarnal} Votos
-                          </td>
-                        </tr>
-                        
-                      </tbody>
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   )

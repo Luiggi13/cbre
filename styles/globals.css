@@ -28,3 +28,7 @@ a {
     background: black;
   }
 }
+
+.leftcard {
+  background-image: url(../public/assets/steak.jpeg);
+  }
