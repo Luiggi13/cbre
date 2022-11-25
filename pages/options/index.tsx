@@ -285,7 +285,7 @@ export default function Options() {
               <div className="py-3 px-6 border-t border-gray-300 text-gray-600">
                 <p className="mb-3"><span className="font-bold">Dirección:</span> Calle Enric Granados, 52 08008 – Barcelona</p>
                 <p className="mb-3"><span className="font-bold">Fecha de la reserva:</span> Viernes, 2 de Diciembre de 2022</p>
-                <p className="mb-3"><span className="font-bold">Hora de la reserva:</span> 20:00h</p>
+                <p className="mb-3"><span className="font-bold">Hora de la reserva:</span> 20:30h</p>
                 <p className="mb-3"><span className="font-bold">Ver mapa:</span></p>
                 <a
                 rel="noreferrer"
