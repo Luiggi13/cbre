@@ -13,10 +13,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const tt = await supabase.from('usuarioscbre').select().order('username',  {ascending: true} )
-console.log('tt.data')
-console.log(tt.data)
-  // const resultado: DataRest[] = data!;
   res.status(200).json(tt.data)
-  
 }
 

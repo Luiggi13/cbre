@@ -269,9 +269,9 @@ export default function Options() {
               className={"mx-auto w-48 rounded-full" && styles.avatar}
             />
           </div>
-          <p className="text-xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, por fin ya tenemos restaurante. 🎄</p>
+          <p className="text-xl md:text-3xl text-center tracking-tight text-gray-500 mb-5">Bienvenida {user}, por fin ya tenemos restaurante. 🎄</p>
           <div className="flex justify-center">
-            <div className="rounded-lg shadow-lg bg-white w-full sm:w-2/3 lg:w-2/3 xl:w-1/2">
+            <div className="rounded-lg shadow-lg bg-white w-full sm:w-2/3 lg:w-full xl:w-2/3 md:w-full">
                 <Image
                   src={steakImg}
                   priority={true}
